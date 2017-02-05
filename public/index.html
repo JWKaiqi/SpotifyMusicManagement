@@ -1,0 +1,164 @@
+<html>
+	<head>
+		<meta content="initial-scale=1.0" name="viewport">
+		<script src=
+		"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+		type="text/javascript"></script>
+		<script src="https://cdn.jsdelivr.net/lodash/4.17.1/lodash.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		<title></title>
+	</head>
+	<body onload="startApp()">
+		<!-- "Page" to show when not logged in -->
+		<div id="login">
+			<h2 style="margin-left: -60; padding-bottom: 30;">
+				Spotify Music Management
+			</h2>
+			<p>
+				<button id="start" class="btn">Log in</button>
+			</p>
+		</div><!-- "Page" to show when logged in -->
+		<div id="loggedin">
+			<script type="text/javascript" src="app.js"></script>
+			<div class="flex-container">
+				<header>
+					<h1>Spotify Music Management</h1>
+				</header>
+
+				<nav class="nav">
+					<div id="PlayListsBar">
+						<div id="PlayListsBarContent">
+							<h3 id="PlayListsBarTitle">Play List</h3>
+							<ul id="MyPlayListsBar"></ul>
+						</div>
+						<div id="TagsBar" class="TagSideBar">
+							<h3 id="TagsBarTitle">My Music Tags</h3>
+							<div id="SongTags"></div>
+							<div id="TagsBarEdit">
+								<div class="tooltip">
+									<i style="cursor:pointer" id="btn_ManageTag" class="fa fa-pencil fa-1x" aria-hidden="true"></i>
+									<span id="tooltipedit" class="tooltiptext">edit</span>
+								</div>
+								<div class="tooltip">
+									<i style="cursor:pointer" id="btn_SearchAnyTag" class="fa fa-search" aria-hidden="true"></i>
+									<span class="tooltiptext">Search songs with any of these tags</span>
+								</div>
+								<div class="tooltip">
+									<i style="cursor:pointer" id="btn_SearchAllTag" class="fa fa-search-plus" aria-hidden="true"></i>
+									<span class="tooltiptext">Search songs with all of these tags</span>
+								</div>
+							</div>
+						</div>
+						<div id="div_SearchByRating">
+							<h3 id="header_SearchByRating">Search By Rating <br/>(Greater equal to)</h3>
+							<div id="star_SearchByRating"></div>
+						</div>
+					</div>
+					<template id="CheckBoxTagList">
+						<div class="tag-list-item">
+							<input type="checkbox" class="tagcheckbox">
+							<div class="taglabel"></div>
+						</div>
+					</template>
+				</nav>
+
+				<article class="article">
+					<h2 id="PlayListName"></h2>
+					<div id="div_CreateNewPlayList">
+					</div>
+					<template id="CreateNewPlayList">
+						<button class="button button4" id = "btn_CreateNewPlayList">Add This PlayList to My Spotify</button>
+						<input id = "NewPlayListName" type="text">
+						<button class="button button4" id="Create">Create</button>
+					</template>
+					<!-- The Modal -->
+					<div id="SongTagModal" class="modal">
+						<!-- Modal content -->
+						<div class="modal-content">
+							<div class="modal-header">
+								<span class="close">×</span>
+								<h2 id="modal-header"></h2>
+							</div>
+							<div class="modal-body">
+								<p id="songid"></p>
+								<p id="ContentHeader"></p>
+								<div id="LabelTagName" class="list_view" style="width:100%;">
+									<h2 class="value">Current Tags</h2>
+									<div id="CurTagsContent" class="list clear_left"></div>
+								</div>
+
+								<div id="LabelTagInput" class="list_view" style="width:100%;">
+									<h2 class="value">Add Tag</h2>
+									<div id="InputTag" class="list clear_left"></div>
+								</div>
+
+								<div id="AddTagToSong" class="list_view" style="width:100%;">
+									<h2 class="value">Add Tag</h2>
+									<div id="TagList" class="list clear_left"></div>
+								</div>
+
+								<template id="Current_Tag">
+									<div class="Tag_row">
+										<div class="value"></div>
+										<button class="btn clear_left">-</button>
+									</div>
+								</template>
+
+								<template id="Input_NewTag">
+									<div class="input_row" class="key_val_row">
+										<input type="text" id="TagVal">
+										<button id="addTagBtn" class="btn">+</button>
+										<div class="error"></div>
+									</div>
+								</template>
+
+								<template id="Input_AddTagToSong">
+									<div class="Tag_row">
+										<div class="value"></div>
+										<button class="btn clear_left">+</button>
+									</div>
+								</template>
+
+							</div>
+						</div>
+					</div>
+
+					<table id="PlaylistTable">
+						<colgroup>
+							<col style="width:40%">
+							<col style="width:30%">
+							<col style="width:30%">
+						</colgroup>
+						<tr>
+							<th id="Table_Song" width="55%">SONG</th>
+							<th>ARTIST</th>
+							<th width="15%">RATING</th>
+							<th width="10%">EDIT TAGS</th>
+						</tr>
+					</table>
+					<ul id="playlists"></ul>
+
+				</article>
+				<template id="ratingstars">
+					<div class="stars">
+						<form id="star" action="#">
+							<input class="star star-5" id="star-5" type="radio" name="star"/>
+							<label class="star star-5" for="star-5"></label>
+							<input class="star star-4" id="star-4" type="radio" name="star"/>
+							<label class="star star-4" for="star-4"></label>
+							<input class="star star-3" id="star-3" type="radio" name="star"/>
+							<label class="star star-3" for="star-3"></label>
+							<input class="star star-2" id="star-2" type="radio" name="star"/>
+							<label class="star star-2" for="star-2"></label>
+							<input class="star star-1" id="star-1" type="radio" name="star"/>
+							<label class="star star-1" for="star-1"></label>
+						</form>
+					</div>
+				</template>
+				<footer>Copyright © Jennifer Wu</footer>
+			</div>
+		</div>
+	</body>
+</html>
